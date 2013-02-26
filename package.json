@@ -1,0 +1,27 @@
+{
+  "name": "brewpi",
+  "description": "Node.js implementation of BrewPi temperature control",
+  "version": "0.1.0-alpha",
+  "author": "Tom Klun <tom@tomklun.com>",
+  "contributors": [
+    {
+      "name": "Tom Klun",
+      "email": "tom@tomklun.com"
+    }
+  ],
+  "dependencies": {
+
+  },
+  "repository": "",
+  "main": "index",
+  "bin": {
+    "brewpi": "./bin/brewpi"
+  },
+  "scripts": {
+    "prepublish": "npm prune",
+    "test": "make test"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
