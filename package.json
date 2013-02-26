@@ -10,7 +10,10 @@
     }
   ],
   "dependencies": {
-
+    "serialport": "~1.0.8"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.1"
   },
   "repository": "",
   "main": "index",
