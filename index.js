@@ -4,4 +4,4 @@
 
 var brewPi = require('./lib/app');
 
-brewPi.createBrewPi();
+brewPi();
