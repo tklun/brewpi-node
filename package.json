@@ -17,9 +17,6 @@
   },
   "repository": "",
   "main": "index",
-  "bin": {
-    "brewpi": "./bin/brewpi"
-  },
   "scripts": {
     "prepublish": "npm prune",
     "test": "make test"
