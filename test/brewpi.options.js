@@ -13,7 +13,7 @@ describe('brewPi', function(){
     });
 
     it('should have a default serial port', function(){
-      var testBrewPi = new BrewPi({});
+      var testBrewPi = new BrewPi();
 
       testBrewPi.serialPort.should.equal('/dev/ttyACM0');
     });
