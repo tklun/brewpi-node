@@ -17,7 +17,7 @@
     "chai": "~1.5.0",
     "sinon": "~1.6.0"
   },
-  "repository": "",
+  "repository": "https://github.com/tklun/brewpi-node",
   "main": "index",
   "scripts": {
     "prepublish": "npm prune",
