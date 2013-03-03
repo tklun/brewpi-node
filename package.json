@@ -26,6 +26,9 @@
     "chai": "~1.5.0",
     "sinon": "~1.6.0"
   },
+  "directories" : {
+    "lib" : "lib"
+  },
   "repository": {
     "type" : "git",
     "url" : "http://github.com/tklun/brewpi-node.git"
