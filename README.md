@@ -137,3 +137,8 @@ This is a work in progress. Currently this package can control your BrewPi, but 
 * Data logging (either to static files or a database)
 * Ability to program an Arduino with a binary file
 * Much more...
+
+## Special Thanks
+Thanks to [Elco](http://brewpi.com/) for creating the fantastic BrewPi project. He's put a lot of time and money into his BrewPi project, support it if you can.
+
+Also, thanks to [node-serialport](https://github.com/voodootikigod/node-serialport) library for making Node.js serial port development remarkably easy and awesome.
