@@ -105,6 +105,7 @@ myBrewPi.on('brewPiStart', function() {
 ```
 
 or with data
+
 ```js
 myBrewPi.on('newLCDData', function(data) {
 	doSomethingWhenLCDDataIsReceived(data);
