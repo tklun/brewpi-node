@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tklun/brewpi-node.png?branch=master)](http://travis-ci.org/tklun/brewpi-node)
+
 # BrewPi for Node.JS
 This is a Node.JS implementation of [BrewPi](http://brewpi.com/), the Raspberry Pi and Arduino temperature controller for brewing. This implementation is **extremely alpha and incomplete**. Please check out the [official BrewPi repository](https://github.com/BrewPi) for the tried and true approach.
 
