@@ -16,7 +16,6 @@ npm-debug.log
 .git*
 lib-cov/*
 node_modules
-test/*
 coverage.html
 
 .npmignore
