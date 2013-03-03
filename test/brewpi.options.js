@@ -1,5 +1,5 @@
 var BrewPi = require('../'),
-    should = require('should');
+    should = require('chai').should();
 
 describe('brewPi', function(){
   describe('serial port configuration', function(){
