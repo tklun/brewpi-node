@@ -31,11 +31,11 @@ Build something!
 
 ## API
 
-### BrewPi
+#### BrewPi
 
 Constructor exposed by `require('brewpi')`.
 
-### BrewPi()
+#### BrewPi()
 Creates a new `BrewPi`. Works with and without `new`:
 
 ```js
