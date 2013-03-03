@@ -1,5 +1,3 @@
-lib-cov
-coverage.html
 *.seed
 *.log
 *.csv
@@ -13,4 +11,7 @@ logs
 results
 
 npm-debug.log
+
+lib-cov
 node_modules
+coverage.html
