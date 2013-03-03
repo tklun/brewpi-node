@@ -9,6 +9,15 @@
       "email": "tom@tomklun.com"
     }
   ],
+  "bugs": {
+    "url": "https://github.com/tklun/brewpi-node/issues"
+  },
+  "keywords": [
+    "beer",
+    "brewing",
+    "temperature control",
+    "arduino"
+  ],
   "dependencies": {
     "serialport": "~1.0.8"
   },
@@ -17,7 +26,10 @@
     "chai": "~1.5.0",
     "sinon": "~1.6.0"
   },
-  "repository": "https://github.com/tklun/brewpi-node",
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/tklun/brewpi-node.git"
+  },
   "main": "index",
   "scripts": {
     "prepublish": "npm prune",
