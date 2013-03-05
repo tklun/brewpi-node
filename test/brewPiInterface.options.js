@@ -1,6 +1,7 @@
 var BrewPi = require('../'),
     should = require('chai').should(),
-    BrewPiInterface = require('../lib/interface');
+    csrequire = require('covershot').require.bind(null, require),
+    BrewPiInterface = csrequire('../lib/interface');
 
 describe('brewPiInterface', function(){
   describe('instantiation', function(){
