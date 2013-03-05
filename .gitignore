@@ -13,6 +13,7 @@ results
 npm-debug.log
 
 lib-cov
+covershot
 node_modules
 coverage.html
 
