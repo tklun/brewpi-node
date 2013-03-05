@@ -30,5 +30,6 @@ benchmark:
 clean:
 	rm -f coverage.html
 	rm -fr lib-cov
+	rm -fr covershot
 
 .PHONY: test test-unit test-acceptance benchmark clean
