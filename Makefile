@@ -22,7 +22,7 @@ test-cov: lib-cov
 	@BREWPI_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
 
 lib-cov:
-	@jscoverage lib lib-cov
+	@jscoverage --no-highlight lib lib-cov
 
 benchmark:
 	@./support/bench
