@@ -28,7 +28,7 @@ describe('brewPiInterface', function(){
   });
 
   describe('update temperature', function() {
-    it('should emmit an event after the temperature is stored', function() {
+    it('should emit an event after the temperature is stored', function() {
       var spy = sinon.spy();
 
       testBrewPiInterfaceInstance.brewPi.on('newTemperatureData', spy);
