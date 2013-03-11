@@ -18,7 +18,6 @@ MockSerialPort.prototype.close = function(){
 
 MockSerialPort.prototype.open = function(){
   this.emit('open');
-  console.log('open');
 };
 
 module.exports.SerialPort = MockSerialPort;
