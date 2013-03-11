@@ -17,17 +17,23 @@ describe('brewPi', function(){
   });
 
   describe('create', function() {
-
-    // Not actually being called every tiem
-    beforeEach(function(){
-      var testBrewPiInstance = new BrewPi();
-    });
-
     it('should have a reference to it\'s parent context');
 
     it('should create a new brewPiConnector and store it as part of itself');
 
-    it('should listen for new data upon connection');
+    it('should listen for new data upon connection', function() {
+      var testBrewPiInstance = new BrewPi();
+      testBrewPiInstance.brewPiConnector = function() {
+        return new SerialPort('/path/to/fake/usb');
+      };
+
+      // testBrewPiInstance.brewPiConnector.emit('open');
+
+
+      testBrewPiInstance.create(function() {
+        // testBrewPiInstance.brewPiConnector.emit('open');
+      });
+    });
 
     it('should fire a callback function when connection has been opened');
 
