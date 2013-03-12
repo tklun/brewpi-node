@@ -1,6 +1,7 @@
 var BrewPi = require('../'),
     should = require('chai').should(),
     sinon = require('sinon'),
+    clock = sinon.useFakeTimers(),
     csrequire = require('covershot').require.bind(null, require),
     BrewPi = csrequire('../lib/brewpi'),
     SerialPort = require('./MockSerialPort').SerialPort;
@@ -22,21 +23,37 @@ describe('brewPi', function(){
     it('should create a new brewPiConnector and store it as part of itself');
 
     it('should listen for new data upon connection', function() {
-      var testBrewPiInstance = new BrewPi();
+      // TODO - Figure out how to spy on 'data' event
+      // var testBrewPiInstance = new BrewPi(),
+      //     spy = sinon.spy(testBrewPiInstance, 'handleBrewPiSerialData');
+
+      // testBrewPiInstance.brewPiConnector = function() {
+      //   return new SerialPort('/path/to/fake/usb');
+      // };
+
+      // testBrewPiInstance.create();
+
+      // process.nextTick(function(){
+      //   testBrewPiInstance.emit('data');
+      //   spy.calledOnce.should.equal(false);
+      // });
+    });
+
+    it('should fire a callback function when connection has been opened', function() {
+      var testBrewPiInstance = new BrewPi(),
+          spy = sinon.spy();
+
       testBrewPiInstance.brewPiConnector = function() {
         return new SerialPort('/path/to/fake/usb');
       };
 
-      // testBrewPiInstance.brewPiConnector.emit('open');
+      testBrewPiInstance.create(spy);
 
-
-      testBrewPiInstance.create(function() {
-        // testBrewPiInstance.brewPiConnector.emit('open');
+      process.nextTick(function(){
+        spy.calledOnce.should.equal(true);
       });
+
     });
-
-    it('should fire a callback function when connection has been opened');
-
 
   });
 
@@ -137,7 +154,6 @@ describe('brewPi', function(){
 
       testBrewPiInstance.settings.controlSettings.fridgeSetting.should.equal(setting);
     });
-
 
     it('should be able to get the current mode setting', function() {
       var testBrewPiInstance = new BrewPi();
