@@ -40,6 +40,89 @@ describe('brewPi', function(){
 
   });
 
+  describe('incoming serial port data', function () {
+
+    var testBrewPiInstance = new BrewPi(),
+        mockArduinoResponses = {
+          temp: 'T:{\"BeerTemp\": 40}',
+          lcd:  'L: Just some string to display',
+          debug: 'D: some debug info',
+          controlConstants: 'C:{"stubbed": "constants"}',
+          controlSettings: 'S:{"stubbed": "settings"}',
+          controlVariables: 'V:{"stubbed": "constants"}'
+        };
+
+    it('should handle temperature data', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardTemp', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData(mockArduinoResponses.temp);
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith(mockArduinoResponses.temp).should.equal(true);
+    });
+
+    it('should handle debug message', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardDebug', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData(mockArduinoResponses.debug);
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith(mockArduinoResponses.debug).should.equal(true);
+    });
+
+    it('should handle LCD messages', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardLCD', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData(mockArduinoResponses.lcd);
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith(mockArduinoResponses.lcd).should.equal(true);
+    });
+
+    it('should handle control constant messages', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardCC', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData(mockArduinoResponses.controlConstants);
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith(mockArduinoResponses.controlConstants).should.equal(true);
+    });
+
+    it('should handle control settings messages', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardCS', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData(mockArduinoResponses.controlSettings);
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith(mockArduinoResponses.controlSettings).should.equal(true);
+    });
+
+    it('should handle control variables messages', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardCV', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData(mockArduinoResponses.controlVariables);
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith(mockArduinoResponses.controlVariables).should.equal(true);
+    });
+
+    it('should handle invalid messages', function () {
+      var spy = sinon.spy();
+      testBrewPiInstance.on('ardInvalid', spy);
+
+      testBrewPiInstance.handleBrewPiSerialData('asdf');
+
+      spy.calledOnce.should.equal(true);
+      spy.calledWith('asdf').should.equal(true);
+    });
+  });
+
   describe('retrieve settings', function() {
     it('should be able to get the current beer temperature setting', function() {
       var testBrewPiInstance = new BrewPi();
