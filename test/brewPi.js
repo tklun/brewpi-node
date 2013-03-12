@@ -145,21 +145,21 @@ describe('brewPi', function(){
       var testBrewPiInstance = new BrewPi();
       var setting = testBrewPiInstance.getBeerTemperatureSetting();
 
-      testBrewPiInstance.settings.controlSettings.beerSetting.should.equal(setting);
+      (testBrewPiInstance.settings.controlSettings.beerSetting).should.equal(setting);
     });
 
     it('should be able to get the current fridge temperature setting', function() {
       var testBrewPiInstance = new BrewPi();
       var setting = testBrewPiInstance.getFridgeTemperatureSetting();
 
-      testBrewPiInstance.settings.controlSettings.fridgeSetting.should.equal(setting);
+      (testBrewPiInstance.settings.controlSettings.fridgeSetting).should.equal(setting);
     });
 
     it('should be able to get the current mode setting', function() {
       var testBrewPiInstance = new BrewPi();
       var setting = testBrewPiInstance.getMode();
 
-      testBrewPiInstance.settings.controlSettings.mode.should.equal(setting);
+      (testBrewPiInstance.settings.controlSettings.mode).should.equal(setting);
     });
 
     it('should be able to get the current control settings', function() {
