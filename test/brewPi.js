@@ -262,4 +262,26 @@ describe('brewPi', function(){
 
   });
 
+  describe('run loop', function () {
+    describe('start run loop', function () {
+      it('should fire an event when initiated', function () {
+        var testBrewPiInstance = new BrewPi(),
+            spy = sinon.spy();
+
+        testBrewPiInstance.brewPiConnector = function() {
+          return new SerialPort('/path/to/fake/usb');
+        };
+
+        testBrewPiInstance.on('brewPiStart', spy);
+
+        testBrewPiInstance.start();
+
+        process.nextTick(function(){
+          spy.calledOnce.should.equal(true);
+        });
+      });
+    });
+
+  });
+
 });
