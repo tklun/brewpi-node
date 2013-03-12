@@ -1,7 +1,6 @@
 var BrewPi = require('../'),
     should = require('chai').should(),
     sinon = require('sinon'),
-    clock = sinon.useFakeTimers(),
     csrequire = require('covershot').require.bind(null, require),
     BrewPi = csrequire('../lib/brewpi'),
     SerialPort = require('./MockSerialPort').SerialPort;
@@ -43,7 +42,7 @@ describe('brewPi', function(){
       var testBrewPiInstance = new BrewPi(),
           spy = sinon.spy();
 
-      testBrewPiInstance.brewPiConnector = function() {
+      testBrewPiInstance.createBrewPiConnector = function() {
         return new SerialPort('/path/to/fake/usb');
       };
 
@@ -263,12 +262,22 @@ describe('brewPi', function(){
   });
 
   describe('run loop', function () {
+
+
+    beforeEach(function(){
+      this.clock = sinon.useFakeTimers();
+    });
+
+    afterEach(function() {
+      this.clock.restore();
+    });
+
     describe('start run loop', function () {
       it('should fire an event when initiated', function () {
         var testBrewPiInstance = new BrewPi(),
             spy = sinon.spy();
 
-        testBrewPiInstance.brewPiConnector = function() {
+        testBrewPiInstance.createBrewPiConnector = function() {
           return new SerialPort('/path/to/fake/usb');
         };
 
@@ -280,6 +289,24 @@ describe('brewPi', function(){
           spy.calledOnce.should.equal(true);
         });
       });
+
+      it('should refresh control settings after 1 second', function(){
+        // var testBrewPiInstance = new BrewPi(),
+        //     spy = sinon.spy(testBrewPiInstance, 'refreshControlSettings'),
+        //     clock = sinon.useFakeTimers();
+
+        // testBrewPiInstance.createBrewPiConnector = function() {
+        //   return new SerialPort('/path/to/fake/usb');
+        // };
+
+        // testBrewPiInstance.start();
+
+        // setTimeout(spy, 101000);
+        // clock.tick(101000);
+        // spy.calledOnce.should.equal(true);
+
+      });
+
     });
 
   });
