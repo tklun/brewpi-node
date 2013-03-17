@@ -24,11 +24,15 @@ test-cov: lib-cov
 lib-cov:
 	@jscoverage --no-highlight lib lib-cov
 
+docs:
+	./node_modules/docco/bin/docco lib/*.js
+
 benchmark:
 	@./support/bench
 
 clean:
 	rm -f coverage.html
 	rm -fr lib-cov
+	rm -fr covershot
 
-.PHONY: test test-unit test-acceptance benchmark clean
+.PHONY: test test-unit test-acceptance benchmark clean docs

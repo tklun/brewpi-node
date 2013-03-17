@@ -1,7 +1,7 @@
 {
   "name": "brewpi",
   "description": "Node.js implementation of BrewPi temperature control",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "author": "Tom Klun <tom@tomklun.com>",
   "contributors": [
     "Tom Klun <tom@tomklun.com>"
@@ -22,7 +22,8 @@
     "mocha": "~1.8.1",
     "chai": "~1.5.0",
     "sinon": "~1.6.0",
-    "covershot": "~0.1.1"
+    "covershot": "~0.1.1",
+    "docco": "~0.6.1"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,5 @@
     }
   ],
   "readmeFilename": "README.md",
-  "gitHead": "19c3a1ad8811791276e747ae189475deb4b151de",
   "license": "GPLv3"
 }

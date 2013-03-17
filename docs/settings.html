@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>settings.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="brewpi.html">
+                brewpi.js
+              </a>
+            
+              
+              <a class="source" href="interface.html">
+                interface.js
+              </a>
+            
+              
+              <a class="source" href="settings.html">
+                settings.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>settings.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="comment">/**
+ * Create a BrewPi Settings Object.
+ *
+ * This object stubs out the data structure to be populated
+ * by the Arduino. The current settings below are for reference
+ * and will be overwritten when the Arduino is polled.
+ */</span>
+
+<span class="keyword">var</span> settings = exports = module.exports = {};
+
+settings.controlSettings = {
+  mode: <span class="string">'o'</span>,
+  beerSetting: <span class="number">20.0</span>,
+  fridgeSetting: <span class="number">20.0</span>,
+  heatEstimator: <span class="number">0.2</span>,
+  coolEstimator: <span class="number">5</span>
+};
+
+settings.controlConstants = {
+  tempFormat: <span class="string">'C'</span>,
+  tempSettingMin: <span class="number">4.0</span>,
+  tempSettingMax: <span class="number">30.0</span>,
+  KpHeat: <span class="number">10.000</span>,
+  KpCool: <span class="number">5.000</span>,
+  Ki: <span class="number">0.020</span>,
+  KdCool: -<span class="number">10.000</span>,
+  KdHeat: -<span class="number">5.000</span>,
+  iMaxSlope: <span class="number">0.05</span>,
+  iMinSlope: -<span class="number">0.1</span>,
+  iMaxError: <span class="number">0.5</span>,
+  idleRangeHigh: <span class="number">0.500</span>,
+  idleRangeLow: -<span class="number">0.500</span>,
+  heatingTargetUpper: <span class="number">0.199</span>,
+  heatingTargetLower: -<span class="number">0.100</span>,
+  coolingTargetUpper: <span class="number">0.100</span>,
+  coolingTargetLower: -<span class="number">0.199</span>,
+  maxHeatTimeForEstimate: <span class="number">600</span>,
+  maxCoolTimeForEstimate: <span class="number">1200</span>
+};
+
+settings.controlVariables = {
+  beerDiff: <span class="number">0</span>,
+  fridgeDiff: <span class="number">0</span>,
+  diffIntegral: <span class="number">0</span>,
+  beerSlope: <span class="number">0</span>,
+  p: <span class="number">0</span>,
+  i: <span class="number">0</span>,
+  d: <span class="number">0</span>,
+  Kp: <span class="number">0</span>,
+  Kd: <span class="number">0</span>,
+  estimatedPeak: <span class="number">0</span>,
+  negPeakSetting: <span class="number">0</span>,
+  posPeakSetting: <span class="number">0</span>,
+  negPeak: <span class="number">0</span>,
+  posPeak: <span class="number">0</span>
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
