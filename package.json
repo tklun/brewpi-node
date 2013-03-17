@@ -22,7 +22,8 @@
     "mocha": "~1.8.1",
     "chai": "~1.5.0",
     "sinon": "~1.6.0",
-    "covershot": "~0.1.1"
+    "covershot": "~0.1.1",
+    "docco": "~0.6.1"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>brewpi.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="brewpi.html">
+                brewpi.js
+              </a>
+            
+              
+              <a class="source" href="interface.html">
+                interface.js
+              </a>
+            
+              
+              <a class="source" href="settings.html">
+                settings.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>brewpi.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2>BrewPi Setup</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Module dependencies.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">var</span> util = require(<span class="string">'util'</span>),
+    events = require(<span class="string">'events'</span>),
+    serialport = require(<span class="string">'serialport'</span>),
+    SerialPort = serialport.SerialPort,
+    settings = require(<span class="string">'./settings'</span>),
+    BrewPiInterface = require(<span class="string">'./interface'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Current version of Node BrewPi. Keep in sync with <code>package.json</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>exports.version = <span class="string">'0.1.0-alpha'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2>BrewPi Constructor</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">var</span> BrewPi = <span class="keyword">function</span>(options) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Create a new BrewPi instance, regardless of how it&#39;s called</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">if</span>((<span class="keyword">this</span> <span class="keyword">instanceof</span> BrewPi) === <span class="literal">false</span>) {
+    <span class="keyword">return</span> <span class="keyword">new</span> BrewPi();
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Bring in local serial port setting</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.serialPort = options &amp;&amp; options.serialPort ? options.serialPort : <span class="string">'/dev/ttyACM0'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Bring in settings</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.settings = settings;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Method returns a new serial port instance</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.createBrewPiConnector = <span class="keyword">function</span>() {
+    <span class="keyword">var</span> brewPiConnector = <span class="keyword">new</span> SerialPort(<span class="keyword">this</span>.serialPort, {
+      baudrate: <span class="number">57600</span>,
+      parser: serialport.parsers.readline(<span class="string">'\n'</span>)
+    });
+
+    <span class="keyword">return</span> brewPiConnector;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Method attaches events to serial port connector passed as first argument</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.attachConnectorEvents = <span class="keyword">function</span>(connector, callback) {
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>When the serial port is connected, attach events and handle data</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>connector.on(<span class="string">'open'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>When data is received, deal with it</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>connector.on(<span class="string">'data'</span>, <span class="keyword">function</span>(data) {
+        self.handleBrewPiSerialData(data);
+      });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>If a function is passed as the <code>callback</code>, execute it</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">if</span> (<span class="keyword">typeof</span> callback === <span class="string">'function'</span>) {
+        callback();
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Method takes raw data from serial port and handles it</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.handleBrewPiSerialData = <span class="keyword">function</span>(serialData) {
+    util.log(<span class="string">'Settings: '</span>, <span class="keyword">this</span>.settings);
+    <span class="keyword">var</span> serialDataKey = serialData[<span class="number">0</span>];
+
+    <span class="keyword">var</span> serialDataEventMap = {
+      T: <span class="string">'ardTemp'</span>,   <span class="comment">// Process temperature line</span>
+      D: <span class="string">'ardDebug'</span>,  <span class="comment">// Debug received</span>
+      L: <span class="string">'ardLCD'</span>,    <span class="comment">// LCD content received</span>
+      C: <span class="string">'ardCC'</span>,     <span class="comment">// Control constant received</span>
+      S: <span class="string">'ardCS'</span>,     <span class="comment">// Control settings received</span>
+      V: <span class="string">'ardCV'</span>      <span class="comment">// Control variables received</span>
+    };
+
+    <span class="keyword">if</span> (serialDataEventMap.hasOwnProperty(serialDataKey)) {
+      <span class="keyword">this</span>.emit(serialDataEventMap[serialDataKey], serialData);
+    } <span class="keyword">else</span> {
+      util.log(<span class="string">'Can\'t process line from Arduino: '</span>, serialData[<span class="number">0</span>]);
+      <span class="keyword">this</span>.emit(<span class="string">'ardInvalid'</span>, serialData);
+    }
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Methods creates a serial port connection and attaches events</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.create = <span class="keyword">function</span>(createCallback) {
+
+    <span class="keyword">this</span>.brewPiConnector = <span class="keyword">this</span>.createBrewPiConnector();
+
+    <span class="keyword">this</span>.attachConnectorEvents(<span class="keyword">this</span>.brewPiConnector, createCallback);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Create a new arduino read interface</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">var</span> brewPiInterface = <span class="keyword">new</span> BrewPiInterface({
+      brewPi: <span class="keyword">this</span>
+    });
+  };
+
+  events.EventEmitter.call(<span class="keyword">this</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Inherit event emmitter object</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>util.inherits(BrewPi, events.EventEmitter);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h2>BrewPi Public API</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Expose BrewPi <code>start</code> prototype</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.start = <span class="keyword">function</span>() {
+  <span class="keyword">var</span> self = <span class="keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Set up a new BrewPi</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.create(<span class="keyword">function</span>() {
+    <span class="keyword">var</span> dataLoop = <span class="keyword">function</span>() {
+      setTimeout(<span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Refresh control settings</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>self.refreshControlSettings();
+      },<span class="number">1000</span>);
+
+      setTimeout(<span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Refresh constant settings</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>self.refreshControlConstants();
+      },<span class="number">3000</span>);
+
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Start the BrewPi loop</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>self.intervalLoop = setInterval(dataLoop, <span class="number">5000</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Emit the start event</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>self.emit(<span class="string">'brewPiStart'</span>);
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Expose BrewPi <code>stop</code> prototype</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.stop = <span class="keyword">function</span>() {
+  <span class="keyword">if</span> (<span class="keyword">this</span>.intervalLoop) {
+    clearInterval(<span class="keyword">this</span>.intervalLoop);
+    util.log(<span class="string">'BrewPi logging stopped.'</span>);
+    <span class="keyword">this</span>.emit(<span class="string">'brewPiStop'</span>);
+  } <span class="keyword">else</span> {
+    util.log(<span class="string">'BrewPi not running.'</span>);
+  }
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <h2>Expose BrewPi getter prototypes</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Get BrewPi mode</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getMode = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">this</span>.settings.controlSettings.mode;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Get current fridge semperature aetting</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getFridgeTemperatureSetting = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">this</span>.settings.controlSettings.fridgeSetting;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Get current beer temperature setting</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getBeerTemperatureSetting = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">this</span>.settings.controlSettings.beerSetting;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Get current Control Settings</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getControlSettings = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">this</span>.settings.controlSettings;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Get current Control Constants</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getControlConstants = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">this</span>.settings.controlConstants;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Get current Control Variables</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getControlVariables = <span class="keyword">function</span>() {
+  <span class="keyword">return</span> <span class="keyword">this</span>.settings.controlVariables;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Refresh Control Settings from arduino</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.refreshControlSettings = <span class="keyword">function</span>() {
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'s'</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Refresh Control Constants from arduino</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.refreshControlConstants = <span class="keyword">function</span>() {
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'c'</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Refresh Control Variables from arduino</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.refreshControlVariables = <span class="keyword">function</span>() {
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'v'</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Load arduino with default Control Settings from AVR code</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.loadDefaultControlSettings = <span class="keyword">function</span>() {
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'S'</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Load arduino with default Control Constants from AVR code</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.loadDefaultControlConstants = <span class="keyword">function</span>() {
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'C'</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Send settings to arduino</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.sendSettings = <span class="keyword">function</span>(jsonData) {
+  <span class="keyword">var</span> dataString = JSON.stringify(jsonData);
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'j'</span> + dataString);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <h2>Expose BrewPi constructor</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>exports = module.exports = BrewPi;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
