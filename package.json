@@ -1,7 +1,7 @@
 {
   "name": "brewpi",
   "description": "Node.js implementation of BrewPi temperature control",
-  "version": "0.1.0-alpha",
+  "version": "0.1.1-alpha",
   "author": "Tom Klun <tom@tomklun.com>",
   "contributors": [
     "Tom Klun <tom@tomklun.com>"
