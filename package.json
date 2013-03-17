@@ -16,7 +16,8 @@
     "arduino"
   ],
   "dependencies": {
-    "serialport": "~1.0.8"
+    "serialport": "~1.0.8",
+    "cube": "~0.2.4"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
