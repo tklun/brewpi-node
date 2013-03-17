@@ -24,6 +24,11 @@
               </a>
             
               
+              <a class="source" href="data.html">
+                data.js
+              </a>
+            
+              
               <a class="source" href="interface.html">
                 interface.js
               </a>
@@ -50,10 +55,16 @@
         <li id="section-1">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h2>BrewPi Setup</h2>
+              <p> This is the main file of the BrewPi Node library.</p>
+<p> This file is responsible for creating and exporting the public BrewPi functionality.
+ In addition to creating the public API, it instantiates the serial port connection to the Arduino.
+ As this is the only file with direct access to the serial port, this file is also
+ responsible for writing messages to the Arduino, as well as receiving data from the Arduino
+ and passing it along.</p>
+<h2>BrewPi Setup</h2>
 
             </div>
             
@@ -90,7 +101,7 @@
 
             </div>
             
-            <div class="content"><div class="highlight"><pre>exports.version = <span class="string">'0.1.0-alpha'</span>;</pre></div></div>
+            <div class="content"><div class="highlight"><pre>exports.version = <span class="string">'0.1.1-alpha'</span>;</pre></div></div>
             
         </li>
         
@@ -269,7 +280,7 @@
             </div>
             
             <div class="content"><div class="highlight"><pre><span class="keyword">this</span>.handleBrewPiSerialData = <span class="keyword">function</span>(serialData) {
-    util.log(<span class="string">'Settings: '</span>, <span class="keyword">this</span>.settings);
+    console.log(<span class="string">'Settings: '</span>, <span class="keyword">this</span>.settings);
     <span class="keyword">var</span> serialDataKey = serialData[<span class="number">0</span>];
 
     <span class="keyword">var</span> serialDataEventMap = {
@@ -284,7 +295,7 @@
     <span class="keyword">if</span> (serialDataEventMap.hasOwnProperty(serialDataKey)) {
       <span class="keyword">this</span>.emit(serialDataEventMap[serialDataKey], serialData);
     } <span class="keyword">else</span> {
-      util.log(<span class="string">'Can\'t process line from Arduino: '</span>, serialData[<span class="number">0</span>]);
+      console.log(<span class="string">'Can\'t process line from Arduino: '</span>, serialData[<span class="number">0</span>]);
       <span class="keyword">this</span>.emit(<span class="string">'ardInvalid'</span>, serialData);
     }
   };</pre></div></div>
@@ -424,7 +435,7 @@
             <div class="content"><div class="highlight"><pre>self.refreshControlConstants();
       },<span class="number">3000</span>);
 
-    };</pre></div></div>
+      setTimeout(<span class="keyword">function</span>() {</pre></div></div>
             
         </li>
         
@@ -435,11 +446,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>Start the BrewPi loop</p>
+              <p>Refresh constant settings</p>
 
             </div>
             
-            <div class="content"><div class="highlight"><pre>self.intervalLoop = setInterval(dataLoop, <span class="number">5000</span>);</pre></div></div>
+            <div class="content"><div class="highlight"><pre>self.getTemperatureData();
+      },<span class="number">4000</span>);
+
+    };</pre></div></div>
             
         </li>
         
@@ -449,6 +463,21 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Start the BrewPi loop</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>self.intervalLoop = setInterval(dataLoop, <span class="number">5000</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Emit the start event</p>
 
@@ -461,11 +490,11 @@
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Expose BrewPi <code>stop</code> prototype</p>
 
@@ -474,21 +503,21 @@
             <div class="content"><div class="highlight"><pre>BrewPi.prototype.stop = <span class="keyword">function</span>() {
   <span class="keyword">if</span> (<span class="keyword">this</span>.intervalLoop) {
     clearInterval(<span class="keyword">this</span>.intervalLoop);
-    util.log(<span class="string">'BrewPi logging stopped.'</span>);
+    console.log(<span class="string">'BrewPi logging stopped.'</span>);
     <span class="keyword">this</span>.emit(<span class="string">'brewPiStop'</span>);
   } <span class="keyword">else</span> {
-    util.log(<span class="string">'BrewPi not running.'</span>);
+    console.log(<span class="string">'BrewPi not running.'</span>);
   }
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <h2>Expose BrewPi getter prototypes</h2>
 
@@ -497,11 +526,11 @@
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Get BrewPi mode</p>
 
@@ -514,11 +543,11 @@
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>Get current fridge semperature aetting</p>
 
@@ -531,11 +560,11 @@
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Get current beer temperature setting</p>
 
@@ -548,11 +577,11 @@
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Get current Control Settings</p>
 
@@ -565,11 +594,11 @@
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Get current Control Constants</p>
 
@@ -582,11 +611,11 @@
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Get current Control Variables</p>
 
@@ -599,11 +628,28 @@
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Get current temperature information from arduino</p>
+
+            </div>
+            
+            <div class="content"><div class="highlight"><pre>BrewPi.prototype.getTemperatureData = <span class="keyword">function</span>() {
+  <span class="keyword">this</span>.brewPiConnector.write(<span class="string">'t'</span>);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Refresh Control Settings from arduino</p>
 
@@ -616,11 +662,11 @@
         </li>
         
         
-        <li id="section-34">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Refresh Control Constants from arduino</p>
 
@@ -633,11 +679,11 @@
         </li>
         
         
-        <li id="section-35">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Refresh Control Variables from arduino</p>
 
@@ -650,11 +696,11 @@
         </li>
         
         
-        <li id="section-36">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Load arduino with default Control Settings from AVR code</p>
 
@@ -667,11 +713,11 @@
         </li>
         
         
-        <li id="section-37">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Load arduino with default Control Constants from AVR code</p>
 
@@ -684,11 +730,11 @@
         </li>
         
         
-        <li id="section-38">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Send settings to arduino</p>
 
@@ -702,11 +748,11 @@
         </li>
         
         
-        <li id="section-39">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <h2>Expose BrewPi constructor</h2>
 
@@ -715,11 +761,11 @@
         </li>
         
         
-        <li id="section-40">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               
             </div>
