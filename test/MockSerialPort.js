@@ -2,8 +2,11 @@ var util = require('util'),
     events = require('events');
 
 var MockSerialPort = function(path){
+  var self = this;
   this.isClosed = false;
-  this.open();
+  process.nextTick(function () {
+    self.open();
+  });
 };
 
 util.inherits(MockSerialPort,events.EventEmitter);
@@ -18,7 +21,6 @@ MockSerialPort.prototype.close = function(){
 
 MockSerialPort.prototype.open = function(){
   this.emit('open');
-  console.log('open');
 };
 
 module.exports.SerialPort = MockSerialPort;

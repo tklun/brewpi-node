@@ -133,7 +133,7 @@ Emitted when control settings are updated.
 Emitted when control variables are updated.
 
 ## Todo
-This is a work in progress. Currently this package can control your BrewPi, but the ability for more advanced (and practical) temperature control is still being developer. The following list is a roadmap of intended functionality.
+This is a work in progress. Currently this package can control your BrewPi, but the ability for more advanced (and practical) temperature control is still being developed. The following list is a roadmap of intended functionality.
 
 * Support for beer profiles
 * Data logging (either to static files or a database)
